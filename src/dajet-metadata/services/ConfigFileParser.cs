@@ -24,7 +24,7 @@ namespace DaJet.Metadata.Services
 
                 if (c == '{') // start of object
                 {
-                    cfo = new ConfigObject();
+                    cfo = new ConfigObject(2000);
                     ParseFile(stream, cfo);
                     if (parent != null) // this is child object
                     {

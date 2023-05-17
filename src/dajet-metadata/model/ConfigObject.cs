@@ -5,67 +5,64 @@ namespace DaJet.Metadata.Model
 {
     public sealed class ConfigObject
     {
-        public List<object> Values { get; } = new List<object>();
+        public List<object> Values { get; }
+
+        public ConfigObject(int capacity)
+        {
+            Values = new List<object>(capacity);
+        }
+
+        public ConfigObject()
+        {
+            Values = new List<object>(2000);
+        }
 
         public int GetInt32(int[] path)
         {
-            if (path.Length == 1)
-            {
-                return int.Parse((string)this.Values[path[0]]);
-            }
-
-            int i = 0;
-            List<object> values = this.Values;
-            do
-            {
-                values = ((ConfigObject)values[path[i]]).Values;
-                i++;
-            }
-            while (i < path.Length - 1);
-
-            return int.Parse((string)values[path[i]]);
+            return int.Parse(GetString(path));
         }
+
         public Guid GetUuid(int[] path)
         {
-            return new Guid(this.GetString(path));
+            return new Guid(GetString(path));
         }
+
         public string GetString(int[] path)
         {
             if (path.Length == 1)
             {
-                return (string)this.Values[path[0]];
+                return (string)Values[path[0]];
             }
 
             int i = 0;
-            List<object> values = this.Values;
+            List<object> values = Values;
             do
             {
                 values = ((ConfigObject)values[path[i]]).Values;
                 i++;
-            }
-            while (i < path.Length - 1);
+            } while (i < path.Length - 1);
 
             return (string)values[path[i]];
         }
+
         public ConfigObject GetObject(int[] path)
         {
             if (path.Length == 1)
             {
-                return (ConfigObject)this.Values[path[0]];
+                return (ConfigObject)Values[path[0]];
             }
 
             int i = 0;
-            List<object> values = this.Values;
+            List<object> values = Values;
             do
             {
                 values = ((ConfigObject)values[path[i]]).Values;
                 i++;
-            }
-            while (i < path.Length - 1);
+            } while (i < path.Length - 1);
 
             return (ConfigObject)values[path[i]];
         }
-                
+
         public DiffObject CompareTo(ConfigObject target)
         {
             DiffObject diff = new DiffObject()
@@ -80,6 +77,7 @@ namespace DaJet.Metadata.Model
 
             return diff;
         }
+
         private void CompareObjects(ConfigObject source, ConfigObject target, DiffObject diff)
         {
             int source_count = source.Values.Count;
@@ -105,8 +103,8 @@ namespace DaJet.Metadata.Model
                 else if (mdSource != null || mdTarget != null)
                 {
                     diff.DiffObjects.Add(
-                            CreateDiff(
-                                diff, DiffKind.Update, source.Values[i], target.Values[i], i));
+                        CreateDiff(
+                            diff, DiffKind.Update, source.Values[i], target.Values[i], i));
                 }
                 else
                 {
@@ -138,6 +136,7 @@ namespace DaJet.Metadata.Model
                 }
             }
         }
+
         private DiffObject CreateDiff(DiffObject parent, DiffKind kind, object source, object target, int path)
         {
             return new DiffObject()

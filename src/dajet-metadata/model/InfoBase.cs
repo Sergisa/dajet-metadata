@@ -14,6 +14,7 @@ namespace DaJet.Metadata.Model
         public List<Dictionary<Guid, ApplicationObject>> ValueTypes { get; private set; }
         public List<Dictionary<Guid, ApplicationObject>> ReferenceTypes { get; private set; }
         public Dictionary<Type, Dictionary<Guid, ApplicationObject>> AllTypes { get; private set; }
+
         public InfoBase()
         {
             Registers = new List<Dictionary<Guid, ApplicationObject>>()
@@ -52,34 +53,48 @@ namespace DaJet.Metadata.Model
                 { typeof(Publication), Publications }
             };
         }
-        
+
         ///<summary>Соответствие идентификаторов объектов метаданных типа "ТабличнаяЧасть"</summary>
         public Dictionary<Guid, ApplicationObject> TableParts { get; } = new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Соответствие идентификаторов объектов метаданных типа "Реквизит", "Измерение", "Ресурс"</summary>
         public Dictionary<Guid, MetadataProperty> Properties { get; } = new Dictionary<Guid, MetadataProperty>();
+
         ///<summary>Коллекция общих свойств конфигурации</summary>
         public Dictionary<Guid, SharedProperty> SharedProperties { get; set; } = new Dictionary<Guid, SharedProperty>();
+
         ///<summary>Коллекция определяемых типов конфигурации</summary>
         public Dictionary<Guid, CompoundType> CompoundTypes { get; set; } = new Dictionary<Guid, CompoundType>();
+
         ///<summary>Коллекция типов определяемых характеристиками</summary>
-        public Dictionary<Guid, Characteristic> CharacteristicTypes { get; set; } = new Dictionary<Guid, Characteristic>();
+        public Dictionary<Guid, Characteristic> CharacteristicTypes { get; set; } =
+            new Dictionary<Guid, Characteristic>();
+
         ///<summary>Соответствие идентификаторов объектов метаданных ссылочного типа</summary>
-        public ConcurrentDictionary<Guid, ApplicationObject> ReferenceTypeUuids { get; } = new ConcurrentDictionary<Guid, ApplicationObject>();
+        public ConcurrentDictionary<Guid, ApplicationObject> ReferenceTypeUuids { get; } =
+            new ConcurrentDictionary<Guid, ApplicationObject>();
+
         ///<summary>Соответствие кодов типов объектов метаданных ссылочного типа</summary>
-        public ConcurrentDictionary<int, ApplicationObject> ReferenceTypeCodes { get; } = new ConcurrentDictionary<int, ApplicationObject>();
+        public ConcurrentDictionary<int, ApplicationObject> ReferenceTypeCodes { get; } =
+            new ConcurrentDictionary<int, ApplicationObject>();
 
         #region "Коллекции ссылочных типов данных (Guid - имя файла объекта метаданных в таблице Config)"
 
         ///<summary>Коллекция планов счетов (ссылочный тип данных)</summary>
         public Dictionary<Guid, ApplicationObject> Accounts { get; } = new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция справочников (ссылочный тип данных)</summary>
         public Dictionary<Guid, ApplicationObject> Catalogs { get; } = new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция документов (ссылочный тип данных)</summary>
         public Dictionary<Guid, ApplicationObject> Documents { get; } = new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция перечислений (ссылочный тип данных)</summary>
         public Dictionary<Guid, ApplicationObject> Enumerations { get; } = new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция планов обмена (ссылочный тип данных)</summary>
         public Dictionary<Guid, ApplicationObject> Publications { get; } = new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция планов видов характеристик (ссылочный тип данных)</summary>
         public Dictionary<Guid, ApplicationObject> Characteristics { get; } = new Dictionary<Guid, ApplicationObject>();
 
@@ -89,12 +104,18 @@ namespace DaJet.Metadata.Model
 
         ///<summary>Коллекция констант (значимый тип данных)</summary>
         public Dictionary<Guid, ApplicationObject> Constants { get; } = new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция регистров бухгалтерии (значимый тип данных)</summary>
-        public Dictionary<Guid, ApplicationObject> AccountingRegisters { get; } = new Dictionary<Guid, ApplicationObject>();
+        public Dictionary<Guid, ApplicationObject> AccountingRegisters { get; } =
+            new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция регистров сведений (значимый тип данных)</summary>
-        public Dictionary<Guid, ApplicationObject> InformationRegisters { get; } = new Dictionary<Guid, ApplicationObject>();
+        public Dictionary<Guid, ApplicationObject> InformationRegisters { get; } =
+            new Dictionary<Guid, ApplicationObject>();
+
         ///<summary>Коллекция регистров накопления (значимый тип данных)</summary>
-        public Dictionary<Guid, ApplicationObject> AccumulationRegisters { get; } = new Dictionary<Guid, ApplicationObject>();
+        public Dictionary<Guid, ApplicationObject> AccumulationRegisters { get; } =
+            new Dictionary<Guid, ApplicationObject>();
 
         #endregion
 
@@ -110,6 +131,7 @@ namespace DaJet.Metadata.Model
             if (!typeInfo.IsValueStorage && compound.TypeInfo.IsValueStorage) typeInfo.IsValueStorage = true;
             if (!typeInfo.IsBinary && compound.TypeInfo.IsBinary) typeInfo.IsBinary = true;
         }
+
         public void ApplyCharacteristic(DataTypeInfo typeInfo, Characteristic characteristic)
         {
             // TODO: add internal flags field to the DataTypeInfo class so as to use bitwise operations
@@ -125,6 +147,22 @@ namespace DaJet.Metadata.Model
 
         ///<summary>Функция возвращает объект метаданных по его полному имени или null, если не найден.</summary>
         ///<param name="metadataName">Полное имя объекта метаданных, например, "Справочник.Номенклатура" или "Документ.ЗаказКлиента.Товары".</param>
+        public Dictionary<Guid, ApplicationObject> GetApplicationObjectByTableName(string metadataName)
+        {
+            if (metadataName.Contains("_" + MetadataTokens.VT)) return TableParts;
+            else if (metadataName.Contains(MetadataTokens.Reference)) return Catalogs;
+            else if (metadataName.Contains(MetadataTokens.Document)) return Documents;
+            else if (metadataName.Contains(MetadataTokens.Const)) return Constants;
+            else if (metadataName.Contains(MetadataTokens.Node)) return Publications;
+            else if (metadataName.Contains(MetadataTokens.Enum)) return Enumerations;
+            else if (metadataName.Contains(MetadataTokens.InfoRg)) return InformationRegisters;
+            else if (metadataName.Contains(MetadataTokens.Chrc)) return Characteristics;
+            else if (metadataName.Contains(MetadataTokens.AccRg)) return AccountingRegisters;
+            else if (metadataName.Contains(MetadataTokens.AccumRg)) return AccumulationRegisters;
+            else if (metadataName.Contains(MetadataTokens.Acc)) return Accounts;
+            return null;
+        }
+
         public ApplicationObject GetApplicationObjectByName(string metadataName)
         {
             string[] names = metadataName.Split('.');

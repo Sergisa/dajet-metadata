@@ -94,12 +94,12 @@ namespace DaJet.Metadata.Services
                     FileLogger.Log("Failed to load [DBNames] params file."
                         + Environment.NewLine + ExceptionHelper.GetErrorTextAndStackTrace(error));
                 }
-                throw new Exception("Failed to load [DBNames] params file.");
+                throw new Exception("Failed to load [DBNames] params file." + error);
             }
 
             try
             {
-                GetEnricher<InfoBase>().Enrich(InfoBase);
+                //GetEnricher<InfoBase>().Enrich(InfoBase);
             }
             catch (Exception error)
             {
@@ -108,7 +108,7 @@ namespace DaJet.Metadata.Services
                     FileLogger.Log("Failed to load [root] config file."
                         + Environment.NewLine + ExceptionHelper.GetErrorTextAndStackTrace(error));
                 }
-                throw new Exception("Failed to load [root] config file.");
+                throw new Exception("Failed to load [root] config file."+error);
             }
 
             if (IsParallel)

@@ -21,6 +21,7 @@ dajet --ms my_server --d my_database --schema "Справочник.Клиент
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Crayon" Version="2.0.69" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20574.7" />
   </ItemGroup>
 
