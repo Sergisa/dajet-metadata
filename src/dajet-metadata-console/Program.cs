@@ -4,6 +4,7 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Linq;
 using DaJet.Metadata.Model;
+using DaJet.Metadata.Services;
 using Microsoft.Data.SqlClient;
 
 namespace DaJet.Metadata.CLI
@@ -57,6 +58,8 @@ namespace DaJet.Metadata.CLI
                 return;
             }
 
+            if (!schema.StartsWith("_")) schema = "_" + schema;
+
             IMetadataService metadataService = new MetadataService();
             if (t == "pg")
             {
@@ -72,15 +75,19 @@ namespace DaJet.Metadata.CLI
                     .UseConnectionString(connectionString);
             }
 
+            /*TableRelationStructureBase relationBase = metadataService.OpenRelationBase();
+            TableObject table = relationBase.Tables.FirstOrDefault(o => schema == o.TableName);
+            */
             InfoBase infoBase = metadataService.OpenInfoBase();
 
-            if (!string.IsNullOrWhiteSpace(schema))
+            /*if (!string.IsNullOrWhiteSpace(schema))
             {
                 _infoBaseDocuments = infoBase.GetApplicationObjectByTableName(schema);
-                TableDescriber describer = new TableDescriber(_infoBaseDocuments,
-                    _infoBaseDocuments.Values.First(o => o.TableName == schema));
+                TableDescriber describer = new TableDescriber(infoBase, relationBase,
+                    _infoBaseDocuments.Values.First(o => o.TableName == schema)
+                );
                 describer.Describe();
-            }
+            }*/
         }
 
         private static string BuildConnectionString(string server, string database, string userName, string password)

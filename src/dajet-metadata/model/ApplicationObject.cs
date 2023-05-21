@@ -24,5 +24,13 @@ namespace DaJet.Metadata.Model
                     || thisType == typeof(Characteristic);
             }
         }
+
+        public ConfigObject Annotation { get; set; }
+        public ConfigObject PartsAnnotation { get; set; }
+
+        public override string ToString()
+        {
+            return base.ToString()+$"<{TableName}>";
+        }
     }
 }

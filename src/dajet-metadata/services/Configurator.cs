@@ -97,20 +97,6 @@ namespace DaJet.Metadata.Services
                 throw new Exception("Failed to load [DBNames] params file." + error);
             }
 
-            try
-            {
-                //GetEnricher<InfoBase>().Enrich(InfoBase);
-            }
-            catch (Exception error)
-            {
-                if (LogExceptions)
-                {
-                    FileLogger.Log("Failed to load [root] config file."
-                        + Environment.NewLine + ExceptionHelper.GetErrorTextAndStackTrace(error));
-                }
-                throw new Exception("Failed to load [root] config file."+error);
-            }
-
             if (IsParallel)
             {
                 OpenInfoBaseInParallel();
@@ -249,6 +235,73 @@ namespace DaJet.Metadata.Services
                 _ = InfoBase.ReferenceTypeUuids.TryAdd(info.Value.Uuid, info.Value);
                 _ = InfoBase.ReferenceTypeCodes.TryAdd(info.Value.TypeCode, info.Value);
             }
+
+            info.Value.Properties.ForEach(tableField =>
+            {
+                tableField.RelativeTableDbName = getRelatedTableName(tableField.DbName, info.Value.Annotation);
+            });
+            info.Value.TableParts.ForEach(tablePart =>
+            {
+                ConfigObject subTable = getPartTableAnnotation(tablePart.TableName, info.Value.PartsAnnotation);
+                tablePart.Properties.ForEach(tableField =>
+                {
+                    tableField.RelativeTableDbName = getRelatedTableName(tableField.DbName, subTable);
+                });
+            });
+        }
+
+        private ConfigObject getPartTableAnnotation(string partName, ConfigObject subtablesArrayAnnotationObject)
+        {
+            ConfigObject tablesAnnotation = null;
+            int entryCount = subtablesArrayAnnotationObject.GetInt32(0);
+            //Console.WriteLine($"Обнаружено {entryCount} Полей");
+            for (int i = 1; i <= entryCount; i++)
+            {
+                try
+                {
+                    // _Reference14_VT15
+                    string _parentName = subtablesArrayAnnotationObject.GetString(i, 3);
+                    string _partName = subtablesArrayAnnotationObject.GetString(i, 0);
+                    if ($"_{_parentName}_{_partName}" == partName)
+                    {
+                        tablesAnnotation = subtablesArrayAnnotationObject.GetObject(i, 4);
+                    }
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                }
+            }
+
+            return tablesAnnotation;
+        }
+
+        private string getRelatedTableName(string fieldName, ConfigObject filedsObject)
+        {
+            string Name = "";
+            string Type = "";
+            string RelatedTable = "";
+            Int64 SizeRestriction;
+            int entryCount = filedsObject.GetInt32(0);
+            //Console.WriteLine($"Обнаружено {entryCount} Полей");
+            for (int i = 1; i <= entryCount; i++)
+            {
+                try
+                {
+                    Name = filedsObject.GetString(i, 0);
+                    Type = filedsObject.GetString(i, 2, 1, 0);
+                    if ("_" + Name == fieldName)
+                    {
+                        RelatedTable = filedsObject.GetString(i, 2, 1, 3);
+                    }
+
+                    SizeRestriction = filedsObject.GetInt64(i, 2, 1, 1);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                }
+            }
+
+            return RelatedTable;
         }
 
         #region "DbNames"

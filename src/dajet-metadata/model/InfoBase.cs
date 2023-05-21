@@ -147,7 +147,7 @@ namespace DaJet.Metadata.Model
 
         ///<summary>Функция возвращает объект метаданных по его полному имени или null, если не найден.</summary>
         ///<param name="metadataName">Полное имя объекта метаданных, например, "Справочник.Номенклатура" или "Документ.ЗаказКлиента.Товары".</param>
-        public Dictionary<Guid, ApplicationObject> GetApplicationObjectByTableName(string metadataName)
+        public Dictionary<Guid, ApplicationObject> GetTypeByTableName(string metadataName)
         {
             if (metadataName.Contains("_" + MetadataTokens.VT)) return TableParts;
             else if (metadataName.Contains(MetadataTokens.Reference)) return Catalogs;
@@ -161,6 +161,11 @@ namespace DaJet.Metadata.Model
             else if (metadataName.Contains(MetadataTokens.AccumRg)) return AccumulationRegisters;
             else if (metadataName.Contains(MetadataTokens.Acc)) return Accounts;
             return null;
+        }
+
+        public ApplicationObject GetApplicationObjectByTableName<T>(string desiredTableName)
+        {
+            return AllTypes[typeof(T)].Values.First(table => table.TableName.Contains(desiredTableName));
         }
 
         public ApplicationObject GetApplicationObjectByName(string metadataName)

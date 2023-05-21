@@ -27,9 +27,8 @@ namespace DaJet.Metadata.Enrichers
             infoBase.PlatformRequiredVersion = FileReader.GetPlatformRequiredVersion();
 
             ConfigObject root = FileReader.ReadConfigObject(RootFileName);
-            string fileName = root.GetString(new [] { 1 });
+            string fileName = root.GetString(new[] { 1 });
             ConfigObject config = FileReader.ReadConfigObject(fileName);
-
             infoBase.Uuid = new Guid(fileName);
             infoBase.FileName = infoBase.Uuid;
 
@@ -52,6 +51,7 @@ namespace DaJet.Metadata.Enrichers
             {
                 info.Alias = alias.GetString(new[] { 2 }); // Синоним
             }
+
             info.Comment = config.GetString(new[] { 3, 1, 1, 1, 1, 4 }); // Комментарий
 
             int version = config.GetInt32(new[] { 3, 1, 1, 26 }); // Режим совместимости
@@ -80,6 +80,7 @@ namespace DaJet.Metadata.Enrichers
             // 3.1.2 - количество объектов метаданных ветки "Общие" для данной версии платформы
             int count = config.GetInt32(new[] { 3, 1, 2 });
             int offset = 3;
+            Console.Error.WriteLine($"В файле root обнаружено записей: {count} ");
             for (int i = 0; i < count; i++)
             {
                 try
@@ -103,7 +104,7 @@ namespace DaJet.Metadata.Enrichers
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
-                    Console.Error.WriteLine($"Ошибка парсинга {i}");
+                    Console.Error.WriteLine($"Ошибка парсинга {i} компонента root файла");
                 }
             }
         }

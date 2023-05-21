@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace DaJet.Metadata.Model
 {
-    public sealed class ConfigObject
+    public class ConfigObject
     {
         public List<object> Values { get; }
 
@@ -17,17 +19,48 @@ namespace DaJet.Metadata.Model
             Values = new List<object>(2000);
         }
 
-        public int GetInt32(int[] path)
+        private int[] parseSequence(string sequence)
+        {
+            List<int> intSequence = new();
+            foreach (string s in sequence.Split(","))
+            {
+                intSequence.Add(Int32.Parse(s.Trim()));
+            }
+
+            return intSequence.ToArray();
+        }
+
+        public int GetInt32(string sq)
+        {
+            return GetInt32(parseSequence(sq));
+        }
+
+        public long GetInt64(params int[] path)
+        {
+            return Int64.Parse(GetString(path));
+        }
+
+        public int GetInt32(params int[] path)
         {
             return int.Parse(GetString(path));
         }
 
-        public Guid GetUuid(int[] path)
+        public Guid GetUuid(string path)
+        {
+            return GetUuid(parseSequence(path));
+        }
+
+        public Guid GetUuid(params int[] path)
         {
             return new Guid(GetString(path));
         }
 
-        public string GetString(int[] path)
+        public string GetString(string path)
+        {
+            return GetString(parseSequence(path));
+        }
+
+        public string GetString(params int[] path)
         {
             if (path.Length == 1)
             {
@@ -45,11 +78,16 @@ namespace DaJet.Metadata.Model
             return (string)values[path[i]];
         }
 
-        public ConfigObject GetObject(int[] path)
+        public ConfigObject GetObject(string path)
+        {
+            return GetObject(parseSequence(path));
+        }
+
+        public T GetObject<T>(params int[] path)
         {
             if (path.Length == 1)
             {
-                return (ConfigObject)Values[path[0]];
+                return (T)Values[path[0]];
             }
 
             int i = 0;
@@ -60,7 +98,12 @@ namespace DaJet.Metadata.Model
                 i++;
             } while (i < path.Length - 1);
 
-            return (ConfigObject)values[path[i]];
+            return (T)values[path[i]];
+        }
+
+        public ConfigObject GetObject(params int[] path)
+        {
+            return GetObject<ConfigObject>(path);
         }
 
         public DiffObject CompareTo(ConfigObject target)
@@ -146,6 +189,11 @@ namespace DaJet.Metadata.Model
                 TargetValue = target,
                 DiffKind = kind
             };
+        }
+
+        public override string ToString()
+        {
+            return "{" + String.Join(", ", Values.ToArray()) + "}";
         }
     }
 }

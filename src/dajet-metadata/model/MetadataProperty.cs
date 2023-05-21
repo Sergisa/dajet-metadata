@@ -9,6 +9,8 @@ namespace DaJet.Metadata.Model
     {
         ///<summary>Основа имени поля в таблице СУБД (может быть дополнено постфиксами в зависимости от типа данных свойства)</summary>
         public string DbName { get; set; } = string.Empty;
+        public string RelativeTableName { get; set; } = string.Empty;
+        public string RelativeTableDbName { get; set; } = string.Empty;
         ///<summary>Коллекция для описания полей таблицы СУБД свойства объекта метаданных</summary>
         public List<DatabaseField> Fields { get; set; } = new List<DatabaseField>();
         ///<summary>Логический смысл свойства. Подробнее смотри перечисление <see cref="PropertyPurpose"/>.</summary>
@@ -23,6 +25,6 @@ namespace DaJet.Metadata.Model
                 && Fields.Count > 0
                 && Fields.Where(f => f.IsPrimaryKey).FirstOrDefault() != null);
         }
-        public override string ToString() { return Name; }
+        public override string ToString() { return Name+$"< {DbName} >"; }
     }
 }
