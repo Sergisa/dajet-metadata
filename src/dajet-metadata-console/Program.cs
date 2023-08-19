@@ -75,19 +75,14 @@ namespace DaJet.Metadata.CLI
                     .UseConnectionString(connectionString);
             }
 
-            /*TableRelationStructureBase relationBase = metadataService.OpenRelationBase();
-            TableObject table = relationBase.Tables.FirstOrDefault(o => schema == o.TableName);
-            */
             InfoBase infoBase = metadataService.OpenInfoBase();
 
-            /*if (!string.IsNullOrWhiteSpace(schema))
+            if (!string.IsNullOrWhiteSpace(schema))
             {
-                _infoBaseDocuments = infoBase.GetApplicationObjectByTableName(schema);
-                TableDescriber describer = new TableDescriber(infoBase, relationBase,
-                    _infoBaseDocuments.Values.First(o => o.TableName == schema)
-                );
+                ApplicationObject app = infoBase.GetApplicationObjectByTableName(schema);
+                TableDescriber describer = new TableDescriber(infoBase, app);
                 describer.Describe();
-            }*/
+            }
         }
 
         private static string BuildConnectionString(string server, string database, string userName, string password)

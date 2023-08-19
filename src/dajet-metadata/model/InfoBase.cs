@@ -147,25 +147,31 @@ namespace DaJet.Metadata.Model
 
         ///<summary>Функция возвращает объект метаданных по его полному имени или null, если не найден.</summary>
         ///<param name="metadataName">Полное имя объекта метаданных, например, "Справочник.Номенклатура" или "Документ.ЗаказКлиента.Товары".</param>
-        public Dictionary<Guid, ApplicationObject> GetTypeByTableName(string metadataName)
+        public Type GetTypeByTableName(string metadataName)
         {
-            if (metadataName.Contains("_" + MetadataTokens.VT)) return TableParts;
-            else if (metadataName.Contains(MetadataTokens.Reference)) return Catalogs;
-            else if (metadataName.Contains(MetadataTokens.Document)) return Documents;
-            else if (metadataName.Contains(MetadataTokens.Const)) return Constants;
-            else if (metadataName.Contains(MetadataTokens.Node)) return Publications;
-            else if (metadataName.Contains(MetadataTokens.Enum)) return Enumerations;
-            else if (metadataName.Contains(MetadataTokens.InfoRg)) return InformationRegisters;
-            else if (metadataName.Contains(MetadataTokens.Chrc)) return Characteristics;
-            else if (metadataName.Contains(MetadataTokens.AccRg)) return AccountingRegisters;
-            else if (metadataName.Contains(MetadataTokens.AccumRg)) return AccumulationRegisters;
-            else if (metadataName.Contains(MetadataTokens.Acc)) return Accounts;
+            if (metadataName.Contains("_" + MetadataTokens.VT)) return typeof(TablePart);
+            else if (metadataName.Contains(MetadataTokens.Reference)) return typeof(Catalog);
+            else if (metadataName.Contains(MetadataTokens.Document)) return typeof(Document);
+            else if (metadataName.Contains(MetadataTokens.Const)) return typeof(Constant);
+            else if (metadataName.Contains(MetadataTokens.Node)) return typeof(Publication);
+            else if (metadataName.Contains(MetadataTokens.Enum)) return typeof(Enumeration);
+            else if (metadataName.Contains(MetadataTokens.InfoRg)) return typeof(InformationRegister);
+            else if (metadataName.Contains(MetadataTokens.Chrc)) return typeof(Characteristic);
+            else if (metadataName.Contains(MetadataTokens.AccRg)) return typeof(AccountingRegister);
+            else if (metadataName.Contains(MetadataTokens.AccumRg)) return typeof(AccumulationRegister);
+            else if (metadataName.Contains(MetadataTokens.Acc)) return typeof(Account);
             return null;
         }
 
         public ApplicationObject GetApplicationObjectByTableName<T>(string desiredTableName)
         {
             return AllTypes[typeof(T)].Values.First(table => table.TableName.Contains(desiredTableName));
+        }
+
+        public ApplicationObject GetApplicationObjectByTableName(string desiredTableName)
+        {
+            Type t = GetTypeByTableName(desiredTableName);
+            return AllTypes[t].Values.First(table => table.TableName.Contains(desiredTableName));
         }
 
         public ApplicationObject GetApplicationObjectByName(string metadataName)
