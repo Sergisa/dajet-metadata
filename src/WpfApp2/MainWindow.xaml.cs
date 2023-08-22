@@ -21,6 +21,7 @@ public partial class MainWindow : BaseFormBehavior
 {
     private InfoBase infoBase;
     private IMetadataService metadataService;
+    private ApplicationObject mainTable;
 
     string defultConnectionString =
         "Data Source=127.0.0.1;Initial Catalog=master;Integrated Security=False;User ID=root;Password=isakovs;Encrypt=False";
@@ -61,18 +62,18 @@ public partial class MainWindow : BaseFormBehavior
     {
         FieldsList.Items.Clear();
         PartTablesList.Items.Clear();
-        ApplicationObject table = infoBase.GetApplicationObjectByTableName(Comand.Text);
-        if (table == null)
+        mainTable = infoBase.GetApplicationObjectByTableName(Comand.Text);
+        if (mainTable == null)
         {
             Description.Text = "Ничего не нашлось";
         }
         else
         {
             Description.Text = "";
-            TableName.Text = table.Name;
-            TableAlias.Text = table.Alias;
-            fillTableDescription(table, FieldsList);
-            table.TableParts.ForEach(table => { PartTablesList.Items.Add(table); });
+            TableName.Text = mainTable.Name;
+            TableAlias.Text = mainTable.Alias;
+            fillTableDescription(mainTable, FieldsList);
+            mainTable.TableParts.ForEach(table => { PartTablesList.Items.Add(table); });
         }
     }
 
@@ -156,5 +157,11 @@ public partial class MainWindow : BaseFormBehavior
             .UseConnectionString(defultConnectionString);
         infoBase = metadataService.OpenInfoBase();
         ConnectionAddress.Text = defultConnectionString;
+    }
+
+    private void View_button_OnClickearch(object sender, RoutedEventArgs e)
+    {
+        TableTextView textViewForm = new TableTextView(mainTable);
+        textViewForm.Show();
     }
 }

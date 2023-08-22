@@ -171,7 +171,14 @@ namespace DaJet.Metadata.Model
         public ApplicationObject GetApplicationObjectByTableName(string desiredTableName)
         {
             Type t = GetTypeByTableName(desiredTableName);
-            return AllTypes[t].Values.First(table => table.TableName.Contains(desiredTableName));
+            if (t != null)
+            {
+                return AllTypes[t].Values.FirstOrDefault(table => table.TableName.Contains(desiredTableName));
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public ApplicationObject GetApplicationObjectByName(string metadataName)

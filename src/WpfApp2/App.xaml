@@ -4,6 +4,293 @@
              xmlns:local="clr-namespace:WpfApp2"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="ButtonRightControlStyle" TargetType="{x:Type Button}">
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Content" Value="-"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="FontFamily" Value="Montserrat"></Setter>
+            <Setter Property="Cursor" Value="Hand"></Setter>
+            <Setter Property="Background" Value="#28B5F8" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="18" Height="18"
+                                CornerRadius="9"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ButtonCollapseStyle" TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ButtonRightControlStyle}">
+            <Setter Property="Content" Value="-"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#278BEF" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ButtonRightControlStyle}">
+            <Setter Property="Content" Value="X"></Setter>
+            <Setter Property="Background" Value="#DA34AE" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C62DAE" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Style.Setters>
+                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+                <Setter Property="BorderThickness" Value="0"></Setter>
+                <Setter Property="Foreground" Value="White"></Setter>
+                <Setter Property="FontSize" Value="12"></Setter>
+                <Setter Property="FontFamily" Value="Montserrat"></Setter>
+                <Setter Property="Cursor" Value="Hand"></Setter>
+                <Setter Property="Margin" Value="7,10,0,0"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Padding="7,5"
+                                    CornerRadius="7"
+                                    HorizontalAlignment="Right"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="BlueButtonStyleDark" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+            <Style.Setters>
+                <Setter Property="Background" Value="#3B2899"></Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2885C0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="BlueButtonStyleLight" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#1C47FF" />
+
+        </Style>
+        <Style x:Key="GreenButtonStyleDark" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+            <Style.Setters>
+                <Setter Property="Background" Value="#299961"></Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="TextBoxInputLabelStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Foreground" Value="#6A453B"></Setter>
+        </Style>
+
+        <Style x:Key="TextBoxInputStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="CaretBrush" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="BorderBrush" Value="DarkGray"></Setter>
+            <Setter Property="FontSize" Value="13"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="FontFamily" Value="Montserrat"></Setter>
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="Height" Value="28"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="7,5,0,0"></Setter>
+            <Setter Property="Padding" Value="5,0,0,0"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="BorderBrush" Value="#ED001B" />
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+        <Style x:Key="FormStyle" TargetType="{x:Type Border}">
+            <Setter Property="CornerRadius" Value="10"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+            <Setter Property="Opacity" Value="0.95"></Setter>
+            <Setter Property="Border.BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#462AD8" Offset="0" />
+                        <GradientStop Color="#DA34AE" Offset="0.75" />
+                        <GradientStop Color="#8A16C1" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TableBlockTitle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontSize" Value="16"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="FontFamily" Value="Montserrat"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+
+        <Style x:Key="TableBlockSubTitle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="#644AFF"></Setter>
+            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="FontFamily" Value="Montserrat"></Setter>
+            <Setter Property="Margin" Value="0,0,0,0"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+        </Style>
+        <Style x:Key="ApplicationFormStyleDark" TargetType="{x:Type Border}" BasedOn="{StaticResource FormStyle}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="#060531" Offset="0" />
+                        <GradientStop Color="#1B1448" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ListBoxItemTemplate" TargetType="{x:Type ListBox}">
+            <Setter Property="BorderBrush" Value="#462AD8"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Margin" Value="7,5,5,5"></Setter>
+            <Setter Property="BorderThickness" Value="2,0,0,0"></Setter>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"></Setter>
+            <Setter Property="ListBox.ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel
+                            Orientation="Vertical">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock
+                                    MaxWidth="300"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,0,0,1"
+                                    FontSize="14"
+                                    Text="{Binding Name}">
+                                </TextBlock>
+                                <TextBlock
+                                    MaxWidth="300"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,0,0,1"
+                                    FontSize="12"
+                                    Foreground="#644AFF"
+                                    VerticalAlignment="Bottom"
+                                    Text="{Binding Alias}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <Trigger Property="Text" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Width="160"
+                                    FontSize="12"
+                                    Foreground="#28B5F8"
+                                    HorizontalAlignment="Left">
+                                    <Run Text="{Binding TableName}"></Run>
+                                    <Run Text="{Binding DbName}"></Run>
+                                </TextBlock>
+                                <TextBlock
+                                    Width="170"
+                                    FontSize="12"
+                                    HorizontalAlignment="Right"
+                                    TextAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="#3CD642"
+                                    FontWeight="Bold"
+                                    Text="{Binding RelativeTableDbName}">
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ListBox.ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Margin" Value="0,5" />
+                        <Setter Property="Padding" Value="5" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Background" Value="#1E194B" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseCaptured" Value="False">
+                                <Setter Property="Background" Value="#1E194B"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseCaptured" Value="True">
+                                <Setter Property="Background" Value="#3E359C"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ListBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+            <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Grid>
+                            <Rectangle Fill="Pink" RadiusX="10" RadiusY="10" Opacity="0.195" />
+                            <Border CornerRadius="10" x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" Padding="1"
+                                    SnapsToDevicePixels="true">
+                                <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}"
+                                              Template="{DynamicResource ScrollViewerControlTemplate1}">
+                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd"
+                                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

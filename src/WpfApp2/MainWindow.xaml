@@ -7,32 +7,19 @@
                         mc:Ignorable="d"
                         WindowStyle="None"
                         ResizeMode="CanResizeWithGrip"
-                        WindowStartupLocation="CenterScreen"
-                        Background="Transparent"
                         MouseDown="WindowMouseDown"
                         AllowsTransparency="True"
-                        Title="MainWindow" Height="600" Width="900">
+                        WindowStartupLocation="CenterScreen"
+                        Background="Transparent"
+                        Title="MainWindow" Height="600" Width="830">
     <Grid>
         <Border CornerRadius="12">
-            <Border CornerRadius="10"
-                    BorderThickness="2"
-                    Opacity="0.95">
-                <Border.BorderBrush>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#462AD8" Offset="0" />
-                        <GradientStop Color="#DA34AE" Offset="0.75" />
-                        <GradientStop Color="#8A16C1" Offset="1" />
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                        <GradientStop Color="#060531" Offset="0" />
-                        <GradientStop Color="#1B1448" Offset="1" />
-                    </LinearGradientBrush>
-                </Border.Background>
+            <Border
+                Style="{DynamicResource ApplicationFormStyleDark}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
@@ -63,523 +50,195 @@
                         </StackPanel>
 
                         <Button x:Name="BtnMinimize"
-                                BorderThickness="0"
+                                Style="{DynamicResource ButtonCollapseStyle}"
                                 Content="-"
-                                Foreground="White"
-                                FontSize="16"
-                                FontFamily="Montserrat"
-                                Cursor="Hand"
-                                Click="btnMinimize_Click"
                                 Grid.Column="1">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="#28B5F8" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#278BEF" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Width="18" Height="18"
-                                            CornerRadius="9"
-                                            Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                                          HorizontalAlignment="Center" />
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
                         </Button>
                         <Button x:Name="BtnClose"
-                                BorderThickness="0"
-                                Content="X"
-                                Foreground="White"
-                                FontSize="12"
-                                FontFamily="Montserrat"
-                                Cursor="Hand"
+                                Style="{DynamicResource ButtonCloseStyle}"
                                 Click="btnClose_Click"
+                                Content="X"
                                 Grid.Column="2">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="#DA34AE" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#C62DAE" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Width="18" Height="18"
-                                            CornerRadius="9"
-                                            Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                                          HorizontalAlignment="Center" />
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
                         </Button>
                     </Grid>
-                    <StackPanel
-                        Width="400"
-                        Grid.Row="1"
-                        Orientation="Vertical"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Margin="10,20,0,0">
-                        <StackPanel
-                            Orientation="Horizontal">
-                            <Button x:Name="BtnConnection"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Bottom"
-                                    BorderThickness="0"
-                                    Content="Настроить"
-                                    Foreground="White"
-                                    FontSize="12"
-                                    FontFamily="Montserrat"
-                                    Cursor="Hand"
-                                    Margin="10,0,0,0"
-                                    Click="EditConnectionAction">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background" Value="#3B2899" />
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#2885C0" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Width="90" Height="30"
-                                                CornerRadius="7"
-                                                HorizontalAlignment="Right"
-                                                Background="{TemplateBinding Background}">
-                                            <ContentPresenter
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                            <Button x:Name="Connect"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Bottom"
-                                    BorderThickness="0"
-                                    Content="Подключиться"
-                                    Foreground="White"
-                                    FontSize="12"
-                                    FontFamily="Montserrat"
-                                    Cursor="Hand"
-                                    FontWeight="Bold"
-                                    Margin="10,0,0,0"
-                                    Click="ConnectionAction">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background" Value="#3B2899" />
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#2885C0" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Height="30"
-                                                Padding="5"
-                                                CornerRadius="7"
-                                                HorizontalAlignment="Right"
-                                                Background="{TemplateBinding Background}">
-                                            <ContentPresenter
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                        </StackPanel>
+                    <ToolBar
+                        ToolBarTray.IsLocked="True"
+                        ToolBar.OverflowMode="Never"
+                        Background="#2A246B"
+                        Grid.Row="1">
+                        
+                        <Button
+                            FontWeight="Light"
+                            FontFamily="Montserrat"
+                            Click="EditConnectionAction"
+                            Foreground="White"
+                            Margin="0,0,3,0">
+                            Настройки
+                        </Button>
+                        <Button
+                            FontWeight="Light"
+                            FontFamily="Montserrat"
+                            Click="ConnectionAction"
+                            Foreground="White">
+                            Подключиться
+                        </Button>
+                    </ToolBar>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2">
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox x:Name="Comand"
-                                     Width="280"
-                                     FontSize="13"
-                                     FontWeight="Medium"
-                                     FontFamily="Montserrat"
-                                     Foreground="White"
-                                     Background="Transparent"
-                                     CaretBrush="LightGray"
-                                     BorderBrush="DarkGray"
-                                     BorderThickness="0,0,0,1"
-                                     Height="28"
-                                     HorizontalAlignment="Left"
-                                     VerticalContentAlignment="Center"
-                                     Margin="0,5,0,0"
-                                     Padding="10,0,0,0"
-                                     KeyDown="Comand_OnKeyDown">
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsEnabled" Value="True">
-                                                <Setter Property="BorderBrush" Value="#ED001B" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Button x:Name="BtnLogin"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Bottom"
-                                    BorderThickness="0"
-                                    Content="Найти"
-                                    Foreground="White"
-                                    FontSize="12"
-                                    FontFamily="Montserrat"
-                                    Cursor="Hand"
-                                    Margin="10,0,0,0"
-                                    Click="Search_button_OnClickearch">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background" Value="#3B2899" />
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#2885C0" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Width="90" Height="30"
-                                                CornerRadius="7"
-                                                HorizontalAlignment="Right"
-                                                Background="{TemplateBinding Background}">
-                                            <ContentPresenter
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                        </StackPanel>
-
-                        <TextBlock Text="Можно найти информацию о таблице 1с"
-                                   Foreground="LightGray"
-                                   FontSize="12"
-                                   FontWeight="300"
-                                   FontFamily="Montserrat"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="Left"
-                                   Name="Description"
-                                   Margin="0,5,0,0" />
                         <StackPanel
-                            Margin="0,15,0,0"
-                            HorizontalAlignment="Center"
-                            Width="380"
+                            Width="400"
+                            Orientation="Vertical"
                             VerticalAlignment="Top"
-                            Orientation="Vertical">
+                            HorizontalAlignment="Left"
+                            Margin="10,10,0,0">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="Comand"
+                                         Grid.Column="0"
+                                         FontSize="13"
+                                         FontWeight="Medium"
+                                         FontFamily="Montserrat"
+                                         Foreground="White"
+                                         Background="Transparent"
+                                         CaretBrush="LightGray"
+                                         BorderThickness="0,0,0,1"
+                                         Height="28"
+                                         HorizontalAlignment="Stretch"
+                                         Margin="0,5,0,0"
+                                         Padding="10,0,0,0"
+                                         KeyDown="Comand_OnKeyDown">
+                                </TextBox>
+                                <Button x:Name="BtnLogin"
+                                        Style="{StaticResource BlueButtonStyleDark}"
+                                        Content="Найти"
+                                        Grid.Column="1"
+                                        Click="Search_button_OnClickearch">
+                                </Button>
+                            </Grid>
+
+                            <TextBlock Text="Можно найти информацию о таблице 1с"
+                                       Foreground="LightGray"
+                                       FontSize="12"
+                                       FontWeight="300"
+                                       FontFamily="Montserrat"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Left"
+                                       Name="Description"
+                                       Margin="0,5,0,0" />
 
                             <StackPanel
                                 Margin="0,15,0,0"
-                                HorizontalAlignment="Left"
-                                Width="380"
-
-                                VerticalAlignment="Top"
                                 Orientation="Vertical">
-                                <TextBlock
-                                    Name="TableName"
-                                    Text="рр"
-                                    Foreground="White"
-                                    FontSize="16"
-                                    FontWeight="Medium"
-                                    FontFamily="Montserrat"
-                                    HorizontalAlignment="Left" />
-                                <TextBlock
-                                    Name="TableAlias"
-                                    Text="рр"
-                                    Foreground="#644AFF"
-                                    FontSize="12"
-                                    FontWeight="Medium"
-                                    FontFamily="Montserrat"
-                                    Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Bottom" />
-                            </StackPanel>
-                            <ListBox
-                                MaxHeight="550"
-                                ItemsSource="{Binding}"
-                                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                Name="FieldsList"
-                                Margin="0,8,5,5"
-                                BorderThickness="2,0,0,0"
-                                Background="#060531"
-                                BorderBrush="#462AD8"
-                                SelectionChanged="FieldsList_OnSelectionChanged">
-                                <ListBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListBoxItem}">
-                                        <Setter Property="Margin" Value="0,5" />
-                                        <Setter Property="Padding" Value="5" />
-                                        <Setter Property="Foreground" Value="White" />
-                                        <Setter Property="Background" Value="#1E194B" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseCaptured" Value="False">
-                                                <Setter Property="Background" Value="#1E194B"></Setter>
-                                            </Trigger>
-                                            <Trigger Property="IsMouseCaptured" Value="True">
-                                                <Setter Property="Background" Value="#3E359C"></Setter>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListBox.ItemContainerStyle>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel
-                                            Orientation="Vertical">
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock
-                                                    MaxWidth="300"
-                                                    TextWrapping="Wrap"
-                                                    TextAlignment="Left"
-                                                    HorizontalAlignment="Left"
-                                                    Margin="0,0,0,1"
-                                                    FontSize="14"
-                                                    Text="{Binding Name}">
-                                                </TextBlock>
-                                                <TextBlock
-                                                    MaxWidth="300"
-                                                    TextWrapping="Wrap"
-                                                    TextAlignment="Left"
-                                                    HorizontalAlignment="Left"
-                                                    Margin="0,0,0,1"
-                                                    FontSize="12"
-                                                    Foreground="#644AFF"
-                                                    VerticalAlignment="Bottom"
-                                                    Text="{Binding Alias}">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Style.Triggers>
-                                                                <Trigger Property="Text" Value="">
-                                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </StackPanel>
+                                <DockPanel>
+                                    <StackPanel
+                                        DockPanel.Dock="Left"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock
+                                            Name="TableName"
+                                            Text="Table3245"
+                                            Style="{StaticResource TableBlockTitle}" />
+                                        <TextBlock
+                                            Name="TableAlias"
+                                            Text="Преподаватели дисциплин"
+                                            Style="{StaticResource TableBlockSubTitle}" />
+                                    </StackPanel>
 
-                                            <StackPanel
-                                                Orientation="Horizontal">
-                                                <TextBlock
-                                                    Width="160"
-                                                    FontSize="12"
-                                                    Foreground="#28B5F8"
-                                                    HorizontalAlignment="Left"
-                                                    Text="{Binding DbName}">
-                                                </TextBlock>
-                                                <TextBlock
-                                                    Width="170"
-                                                    FontSize="12"
-                                                    HorizontalAlignment="Right"
-                                                    TextAlignment="Right"
-                                                    VerticalAlignment="Bottom"
-                                                    Foreground="#3CD642"
-                                                    FontWeight="Bold"
-                                                    Text="{Binding RelativeTableDbName}">
-                                                </TextBlock>
-                                            </StackPanel>
+                                    <Button x:Name="BtnTextualView"
+                                            Click="View_button_OnClickearch"
+                                            HorizontalAlignment="Right"
+                                            DockPanel.Dock="Left"
+                                            Style="{DynamicResource GreenButtonStyleDark}">
+                                        <Viewbox
+                                            Height="13"
+                                            Margin="0 0"
+                                            VerticalAlignment="Top">
+                                            <Path
+                                                VerticalAlignment="Top"
+                                                Fill="White"
+                                                Data="M391.4,72.7L130.5,335.2l54.7,55.5l261.7-261.7l48.4,47.7c13.3,13.3,25,9.4,25-10.9V24.2c0-12.5-10.9-24.2-24.2-24.2H354.7 c-20.3,0-25,11.7-11.7,25L391.4,72.7z M420.3,435.9V258.6h59.4v197.6c0,35.1-28.9,64.1-64.1,64.1H64.1C28.9,520.3,0,491.4,0,456.2 V103.9c0-35.2,28.9-64.1,64.1-63.3h216.4V100H84.4c-12.5,0-24.2,11.7-24.2,24.2v311.7c0,12.5,11.7,24.2,24.2,24.2h311.7 C408.6,460.2,420.3,448.4,420.3,435.9L420.3,435.9z">
+                                            </Path>
+                                        </Viewbox>
+                                    </Button>
 
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                                <ListViewItem>Не найдено</ListViewItem>
-                                <ListViewItem>Не найдено</ListViewItem>
-                            </ListBox>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel
-                        Width="460"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Orientation="Vertical"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Right"
-                        Margin="0,5,0,0">
-                        <Border
-                            Padding="8"
-                            Margin="0,10,6,0"
-                            BorderBrush="#7F7F7F"
-                            BorderThickness="2"
-                            CornerRadius="5">
-                            <StackPanel>
-                                <TextBlock
-                                    Foreground="White"
-                                    FontFamily="Montserrat"
-                                    FontSize="16">
-                                    Связанные таблицы
-                                </TextBlock>
+                                </DockPanel>
+
                                 <ListBox
-                                    MaxHeight="250"
-                                    ItemsSource="{Binding}"
-                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                    SelectionChanged="partTableSelection"
-                                    Name="PartTablesList"
-                                    Margin="7,5,5,5"
-                                    BorderThickness="2,0,0,0"
-                                    Background="Transparent"
-                                    BorderBrush="#462AD8">
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListBoxItem}">
-                                            <Setter Property="Margin" Value="0,5" />
-                                            <Setter Property="Padding" Value="5" />
-                                            <Setter Property="Foreground" Value="White" />
-                                            <Setter Property="Background" Value="#1E194B"></Setter>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseCaptured" Value="False">
-                                                    <Setter Property="Background" Value="#1E194B"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseCaptured" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"></Setter>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel
-                                                Orientation="Vertical">
-                                                <TextBlock
-                                                    Margin="0,0,0,6"
-                                                    FontSize="14"
-                                                    Text="{Binding Name}">
-                                                </TextBlock>
-                                                <TextBlock
-                                                    FontSize="12"
-                                                    Foreground="#28B5F8"
-                                                    Text="{Binding TableName}">
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                    <ListViewItem>Не найдено</ListViewItem>
+                                    MaxHeight="550"
+                                    Name="FieldsList"
+                                    SelectionChanged="FieldsList_OnSelectionChanged"
+                                    Style="{DynamicResource ListBoxItemTemplate}">
+                                    <ListBoxItem>
+                                        Не найдено
+                                    </ListBoxItem>
+                                    <ListBoxItem>Не найдено</ListBoxItem>
                                 </ListBox>
                             </StackPanel>
-
-                        </Border>
-                        <Border
-                            Padding="8"
-                            Margin="0,10,6,0"
-                            BorderBrush="#7F7F7F"
-                            BorderThickness="2"
-                            CornerRadius="5">
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal"
-                                            Margin="0,0,0,0">
-
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock
-                                            Name="selectedTableName"
-                                            Foreground="#FFFFFF"
-                                            FontFamily="Montserrat"
-                                            VerticalAlignment="Bottom"
-                                            FontSize="16">
-                                            Раcп_Типы приказов о зачислении
-                                        </TextBlock>
-                                        <TextBlock
-                                            Name="selectedTableAlias"
-                                            Foreground="#644AFF"
-                                            FontFamily="JetBrains Mono"
-                                            VerticalAlignment="Bottom"
-                                            Margin="0,0,0,0"
-                                            FontSize="12">
-                                            Типы приказов
-                                        </TextBlock>
-                                    </StackPanel>
+                        </StackPanel>
+                        <StackPanel
+                            Width="400"
+                            Orientation="Vertical"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            Margin="0,5,0,0">
+                            <Border
+                                Padding="8"
+                                Margin="0,10,0,0"
+                                BorderBrush="#7F7F7F"
+                                BorderThickness="2"
+                                CornerRadius="5">
+                                <StackPanel>
+                                    <TextBlock
+                                        Style="{StaticResource TableBlockTitle}">
+                                        Связанные таблицы
+                                    </TextBlock>
+                                    <ListBox
+                                        MaxHeight="250"
+                                        SelectionChanged="partTableSelection"
+                                        Name="PartTablesList"
+                                        Style="{DynamicResource ListBoxItemTemplate}">
+                                        <ListViewItem>Не найдено</ListViewItem>
+                                    </ListBox>
                                 </StackPanel>
 
-                                <ListBox
-                                    MaxHeight="500"
-                                    ItemsSource="{Binding}"
-                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                    Name="SelectedTableFieldsList"
-                                    Margin="7,5,5,5"
-                                    BorderThickness="2,0,0,0"
-                                    Background="Transparent"
-                                    BorderBrush="#462AD8">
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListBoxItem}">
-                                            <Setter Property="Margin" Value="0,5" />
-                                            <Setter Property="Padding" Value="5" />
-                                            <Setter Property="Foreground" Value="White" />
-                                            <Setter Property="Background" Value="#1E194B"></Setter>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseCaptured" Value="False">
-                                                    <Setter Property="Background" Value="#1E194B"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseCaptured" Value="True">
-                                                    <Setter Property="Background" Value="#3E359C"></Setter>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel
-                                                Orientation="Vertical">
-                                                <StackPanel Orientation="Vertical">
-                                                    <TextBlock
-                                                        Margin="0,0,0,1"
-                                                        FontSize="14"
-                                                        Text="{Binding Name}">
-                                                    </TextBlock>
-                                                    <TextBlock
-                                                        Margin="0,0,0,1"
-                                                        FontSize="12"
-                                                        Foreground="#644AFF"
-                                                        VerticalAlignment="Bottom"
-                                                        Text="{Binding Alias}">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock">
-                                                                <Style.Triggers>
-                                                                    <Trigger Property="Text" Value="">
-                                                                        <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                                                    </Trigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
+                            </Border>
+                            <Border
+                                Padding="8"
+                                Margin="0,10,0,0"
+                                BorderBrush="#7F7F7F"
+                                BorderThickness="2"
+                                CornerRadius="5">
+                                <StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Margin="0,0,0,0">
 
-                                                    </TextBlock>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock
-                                                        Width="160"
-                                                        FontSize="12"
-                                                        Foreground="#28B5F8"
-                                                        Text="{Binding DbName}">
-                                                    </TextBlock>
-                                                    <TextBlock
-                                                        Width="210"
-                                                        FontSize="12"
-                                                        Foreground="#3CD642"
-                                                        FontWeight="Bold"
-                                                        TextAlignment="Right"
-                                                        HorizontalAlignment="Right"
-                                                        Text="{Binding RelativeTableDbName}">
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                    <ListViewItem>Не найдено</ListViewItem>
-                                </ListBox>
-                            </StackPanel>
-                        </Border>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Name="selectedTableName"
+                                                Style="{StaticResource TableBlockTitle}">
+                                                Раcп_Типы приказов о зачислении
+                                            </TextBlock>
+                                            <TextBlock
+                                                Name="selectedTableAlias"
+                                                Style="{StaticResource TableBlockSubTitle}">
+                                                Типы приказов
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <ListBox
+                                        MaxHeight="500"
+                                        Name="SelectedTableFieldsList"
+                                        Style="{DynamicResource ListBoxItemTemplate}">
+                                        <ListViewItem>Не найдено</ListViewItem>
+                                    </ListBox>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>
